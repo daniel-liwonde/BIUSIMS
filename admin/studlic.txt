@@ -1,0 +1,35 @@
+<?php
+if(isset($_GET['send']))
+{// if send
+$year= date('Y');
+$sub= $_GET['subject'];
+$sem=checksem();
+$sel=mysqli_query($conn,"select * from teacher_student where sem='$sem' and year='$year' and subject_id='$sub'") or die("here".mysqli_error($conn));
+$stu=mysqli_fetch_assoc($sel);
+$uid=$stu['uid'];
+$sel2=mysqli_query($conn,"select * from student where id='$uid'") or die("here".mysqli_error($conn));
+
+$i=1;
+while($row=mysqli_fetch_array($sel2)){//open loop
+?>
+<tr class="odd gradeX" align="center">  <td><?php echo $i;?> </td>                               
+                                       <td align="left"><?php echo $row['student_id']?> </td>
+ 										<td><?php echo $row['lastname']?> </td>
+                                          <td><?php echo $row['firstname']?> </td>
+                                           <td><?php if($row['mode']==1) echo "F";else echo "D";?> </td>
+                                          <td><?php echo $row['cys']?> </td>
+                                          <td><?php echo $row['stud_current_year']?> </td>
+                                          <td><?php echo $row['current_sem']?> </td>
+                                          <td><?php echo $row['stud_pnone']?> </td>
+                                          <td><?php echo $row['stud_email']?> </td>
+                                          
+                                          <td><?php echo $row['gender']?> </td>
+                                        
+ </tr>
+<?php
+$i++;
+}//close loop
+//}//close else
+}//close if fees=1
+
+?>
